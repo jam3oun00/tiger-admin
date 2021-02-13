@@ -1,0 +1,22 @@
+.theme--dark.v-data-table > .v-data-table__wrapper > table > tbody > tr
+  &:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper)
+    transition: ease
+    background-color: rgba(white, 0.07) !important
+
+.theme--light.v-data-table > .v-data-table__wrapper > table > tbody > tr
+  &:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper)
+    transition: ease
+    background-color: rgba(black, 0.07) !important
+
+.v-data-table tbody tr.v-data-table__selected
+  background: transparent !important
+
+.v-data-table.hide-v-data-footer__select
+  .v-data-footer
+    padding-top: 5px
+    padding-bottom: 5px
+
+  .v-data-footer__select,
+  .v-data-footer__pagination
+    display: none !important
+    opacity: 0 !important

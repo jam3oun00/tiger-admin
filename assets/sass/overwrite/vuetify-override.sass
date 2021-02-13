@@ -1,0 +1,61 @@
+//
+// Remove vuetify ripple //
+//
+.v-ripple__container
+   display: none !important
+
+//
+// Buttons //
+//
+.v-btn
+   box-shadow: none !important
+   // &:not(.v-btn--icon) .icon-tabler
+   //    margin-left: 4px
+
+   &:not(.v-btn--rounded):not(.v-btn--icon)
+      border-radius: 6px !important
+
+   span.v-btn__content
+      text-transform: capitalize !important
+
+   &.v-btn--outlined
+      border-width: 2px !important
+
+   // &.main-form
+   //    position: relative
+   //    border-radius: 50px
+   //    .icon-tabler
+   //       width: 26px
+   //       height: 26px
+   //       position: absolute
+   //       right: -6px
+   //       stroke-width: 1.5px
+
+//
+// Text fileds //
+//
+.v-text-field
+   & > .v-input__control > .v-input__slot
+      // background-color: transparent !important
+      &:before
+         border: none !important
+
+   &.v-input--is-focused > .v-input__control > .v-input__slot:after
+      display: none !important
+
+// Edit the textfields (this will apply only with filled prop)
+.v-text-field--filled
+   border-radius: 5px !important
+
+//
+// Override vuetify elements shadow //
+//
+.v-menu__content
+   @extend .shadow-2
+
+// 
+//  Navigation drawer //
+//    
+.v-navigation-drawer--is-mobile:not(.v-navigation-drawer--close),
+.v-navigation-drawer--temporary:not(.v-navigation-drawer--close)
+   box-shadow: none !important

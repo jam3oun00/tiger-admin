@@ -1,0 +1,12 @@
+.product-img
+  @media #{map-get($display-breakpoints, 'sm-and-down')}
+    width: 100%
+
+  @media #{map-get($display-breakpoints, 'md-only')}
+    width: 90%
+
+  @media #{map-get($display-breakpoints, 'lg-only')}
+    width: 80%
+  
+  @media #{map-get($display-breakpoints, 'xl-only')}
+    width: 60%
