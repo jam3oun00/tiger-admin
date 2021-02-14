@@ -94,7 +94,7 @@ export default {
          options: { customProperties: true },
          themes: {
             light: {
-               primary: "#E91E63",
+               primary: colors.teal,
                wall: '#fff',
                back: '#f2f5fa',
                accent: colors.grey.darken3,
@@ -105,7 +105,7 @@ export default {
                success: colors.green.accent3,
             },
             dark: {
-               primary: "#E91E63",
+               primary: colors.teal,
                wall: '#272727',
                back: '#121212',
                accent: colors.grey.darken3,
