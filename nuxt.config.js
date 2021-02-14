@@ -88,7 +88,7 @@ export default {
    // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
    vuetify: {
       customVariables: ['~/assets/sass/variables.scss'],
-      // treeShake: true,
+      treeShake: true,
       theme: {
          dark: false,
          options: { customProperties: true },
