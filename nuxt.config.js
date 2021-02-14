@@ -7,7 +7,8 @@ export default {
       port: 2222, // default: 2222
       host: 'localhost', // default: localhost
    },
-
+   // https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-loading/
+   loading: false,
    // Global page headers: https://go.nuxtjs.dev/config-head
    head: {
       titleTemplate: '%s - tiger-admin',
@@ -37,7 +38,7 @@ export default {
       '~components/structure/',
       '~components/util/',
       '~components/users/',
-      '~components/menu/',
+      '~components/twigs/',
    ],
 
    // https://github.com/nuxt-community/style-resources-module
@@ -93,18 +94,18 @@ export default {
          options: { customProperties: true },
          themes: {
             light: {
-               primary: colors.blue.darken2,
+               primary: "#E91E63",
                wall: '#fff',
                back: '#f2f5fa',
                accent: colors.grey.darken3,
                secondary: colors.amber.darken3,
                info: colors.teal.lighten1,
                warning: colors.amber.base,
-               error: colors.deepOrange.accent4,
+               error: colors.red,
                success: colors.green.accent3,
             },
             dark: {
-               primary: colors.blue.darken2,
+               primary: "#E91E63",
                wall: '#272727',
                back: '#121212',
                accent: colors.grey.darken3,
@@ -112,7 +113,7 @@ export default {
                info: colors.teal.lighten1,
                warning: colors.amber.base,
                error: colors.deepOrange.accent4,
-               success: colors.green.accent3,
+               success: colors.green,
             },
          },
       },
