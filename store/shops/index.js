@@ -34,6 +34,7 @@ export const actions = {
                if (data !== null) {
                   console.log(data ? data : false)
                   localStorage.setItem('shop_data', JSON.stringify({ ...data }))
+                  console.log(JSON.parse(localStorage.getItem('shop_data')))
                   commit('setMenus', { ...data })
                   commit(
                      'structure/alert/alertMe',

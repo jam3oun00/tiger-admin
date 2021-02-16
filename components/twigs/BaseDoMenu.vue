@@ -207,8 +207,14 @@ export default {
          form: {
             name: this.menu.name || '',
             description: this.menu.description || '',
-            start: this.menu.hours.start,
-            end: this.menu.hours.end,
+            start:
+               this.menu.hours && this.menu.hours.start
+                  ? this.menu.hours.start
+                  : '',
+            end:
+               this.menu.hours && this.menu.hours.end
+                  ? this.menu.hours.end
+                  : '',
             status: this.menu.status,
          },
          isInEditMode: {
@@ -251,21 +257,22 @@ export default {
          this.doMenu(key)
       },
       updateTime() {
+         console.warn(this.form, this.menu)
          // start
-         !isEmpty(this.form.start)
-            ? (this.form.end = [
-                 this.form.end.slice(0, 2),
-                 ':',
-                 this.form.end.slice(2),
-              ].join(''))
-            : null
-
-         // end
-         !isEmpty(this.form.end)
+         this.form.start
             ? (this.form.start = [
                  this.form.start.slice(0, 2),
                  ':',
                  this.form.start.slice(2),
+              ].join(''))
+            : null
+
+         // end
+         this.form.end
+            ? (this.form.end = [
+                 this.form.end.slice(0, 2),
+                 ':',
+                 this.form.end.slice(2),
               ].join(''))
             : null
       },
