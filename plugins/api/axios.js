@@ -1,11 +1,9 @@
 export default function ({ $axios, store }) {
    $axios.onError((error) => {
-      if (process.browser && !error.response.data.error) {
-         store.commit('structure/alert/alertMe', {
-            msg: error.response.data,
-            type: 'error',
-         })
-      }
+      store.commit('structure/alert/alertMe', {
+         msg: error.response.data,
+         type: 'error',
+      })
    })
 }
 

@@ -102,19 +102,19 @@
                <v-dialog
                   v-model="modalStart"
                   ref="modalStart"
-                  :return-value.sync="form.hours.start"
+                  :return-value.sync="form.start"
                   persistent
                   width="290px"
                >
                   <template v-slot:activator="{ on, attrs }">
                      <v-chip v-bind="attrs" v-on="on">
-                        {{ form.hours.start || 'Not set' }}
+                        {{ form.start || 'Not set' }}
                      </v-chip>
                   </template>
                   <v-time-picker
                      format="ampm"
                      v-if="modalStart"
-                     v-model="form.hours.start"
+                     v-model="form.start"
                      full-width
                   >
                      <v-spacer />
@@ -136,19 +136,19 @@
                <v-dialog
                   ref="modalEnd"
                   v-model="modalEnd"
-                  :return-value.sync="form.hours.end"
+                  :return-value.sync="form.end"
                   persistent
                   width="290px"
                >
                   <template v-slot:activator="{ on, attrs }">
                      <v-chip v-bind="attrs" v-on="on">
-                        {{ form.hours.end || 'Not set' }}
+                        {{ form.end || 'Not set' }}
                      </v-chip>
                   </template>
                   <v-time-picker
                      format="ampm"
                      v-if="modalEnd"
-                     v-model="form.hours.end"
+                     v-model="form.end"
                      full-width
                   >
                      <v-spacer />
@@ -207,7 +207,8 @@ export default {
          form: {
             name: this.menu.name || '',
             description: this.menu.description || '',
-            hours: { ...this.menu.hours } || '',
+            start: this.menu.hours.start,
+            end: this.menu.hours.end,
             status: this.menu.status,
          },
          isInEditMode: {
@@ -227,53 +228,50 @@ export default {
    },
    methods: {
       doMenu(key) {
-         //  if (!name) return
-         let form = this.form
-         //  for (let key in form.hours) {
-         //     form.hours[key]
-         //        ? (form.hours[key] = form.hours[key].slice(0, 2))
-         //        : null
-         //  }
-        //  console.warn('cc', { ...form.hours })
-        //  form.hours.start
-        //     ? (form.hours.start = 'form.hours.start.slice(0, 2)')
-        //     : null
-        //  console.warn('cc', { ...form.hours })
-        //  form.hours.end ? (form.hours.end = 'form.hours.end.slice(0, 2)') : null
-          this.$store
-             .dispatch('shops/updateShop', {
-                key,
-                contact: this.$store.state.shops.shops.contact,
-                ...form,
-             })
-             .finally(() => {
-                for (let key in this.isInEditMode) {
-                   this.isInEditMode[key] = false
-                }
-                for (let key in this.loaders) {
-                   this.loaders[key] = false
-                }
-             })
+         this.$store
+            .dispatch('shops/updateShop', {
+               key,
+               contact: this.$store.state.shops.shops.contact,
+               ...this.form,
+            })
+            .finally(() => {
+               for (let key in this.isInEditMode) {
+                  this.isInEditMode[key] = false
+               }
+               for (let key in this.loaders) {
+                  this.loaders[key] = false
+               }
+            })
       },
       updateTimeModal(key, time) {
          time === 'end'
-            ? this.$refs.modalEnd.save(this.form.hours.end)
-            : this.$refs.modalStart.save(this.form.hours.start)
+            ? this.$refs.modalEnd.save(this.form.end)
+            : this.$refs.modalStart.save(this.form.start)
          //  this.loaders.hours = true
          this.doMenu(key)
       },
+      updateTime() {
+         // start
+         !isEmpty(this.form.start)
+            ? (this.form.end = [
+                 this.form.end.slice(0, 2),
+                 ':',
+                 this.form.end.slice(2),
+              ].join(''))
+            : null
+
+         // end
+         !isEmpty(this.form.end)
+            ? (this.form.start = [
+                 this.form.start.slice(0, 2),
+                 ':',
+                 this.form.start.slice(2),
+              ].join(''))
+            : null
+      },
    },
    mounted() {
-      if (!isEmpty(this.form.hours)) {
-         console.log('lrekhgd5fg4df54gd65f4gej')
-         for (let key in this.form.hours) {
-            this.form.hours[key] = [
-               this.form.hours[key].slice(0, 2),
-               ':',
-               this.form.hours[key].slice(2),
-            ].join('')
-         }
-      }
+      this.updateTime()
    },
 }
 </script>
