@@ -1,19 +1,28 @@
 export const state = () => ({
-   shops: {},
+   shop: {},
 })
 export const mutations = {
    setMenus(state, payload) {
-      state.shops = payload || {}
+      state.shop = payload || {}
       console.warn('._.', payload)
    },
 }
+export const getters = {
+   getProduct: (state) => (key) => {
+      let products = []
+      if (key) {
+         products = state.shop.products.filter((v) => (v.menuKey = key))
+      }
+      return products
+   },
+}
 export const actions = {
-   getShops({ commit }) {
+   getShop({ commit }) {
       return new Promise((resolve, reject) => {
          try {
-            const shops = JSON.parse(localStorage.getItem('shop_data')) || {}
-            commit('setMenus', shops)
-            resolve(shops)
+            const shop = JSON.parse(localStorage.getItem('shop_data')) || {}
+            commit('setMenus', shop)
+            resolve(shop)
          } catch (e) {
             commit('setMenus', {})
             reject(e)
@@ -36,10 +45,13 @@ export const actions = {
                   localStorage.setItem('shop_data', JSON.stringify({ ...data }))
                   console.log(JSON.parse(localStorage.getItem('shop_data')))
                   commit('setMenus', { ...data })
+
                   commit(
                      'structure/alert/alertMe',
                      {
-                        msg: 'The menu has been created successfully',
+                        msg: `The menu has been ${
+                           newData.key ? 'updated' : 'created'
+                        } successfully`,
                         type: 'success',
                      },
                      { root: true }

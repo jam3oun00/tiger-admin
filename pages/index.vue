@@ -138,16 +138,16 @@ export default {
    },
    computed: {
       ...mapState({
-         menus: (state) => get(state, 'shops.shops.menus', {}),
+         menus: (state) => get(state, 'shop.shop.menus', {}),
       }),
    },
    methods: {
       CreateDoMenu(key) {
          this.loading = true
          this.$store
-            .dispatch('shops/updateShop', {
+            .dispatch('shop/updateShop', {
                key: key,
-               contact: this.$store.state.shops.shops.contact,
+               contact: this.$store.state.shop.shop.contact,
                ...this.data,
             })
             .then(() => {

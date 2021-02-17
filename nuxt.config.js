@@ -5,7 +5,7 @@ export default {
    ssr: false,
    server: {
       port: 2222, // default: 2222
-      host: 'localhost', // default: localhost
+      host: '0.0.0.0', // default: localhost 
    },
    // https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-loading/
    loading: false,
@@ -102,7 +102,7 @@ export default {
                info: colors.teal.lighten1,
                warning: colors.amber.base,
                error: colors.red,
-               success: colors.green.accent3,
+               success: colors.teal,
             },
             dark: {
                primary: colors.teal,
@@ -112,8 +112,8 @@ export default {
                secondary: colors.amber.darken3,
                info: colors.teal.lighten1,
                warning: colors.amber.base,
-               error: colors.deepOrange.accent4,
-               success: colors.green,
+               error: colors.red,
+               success: colors.teal,
             },
          },
       },

@@ -123,7 +123,7 @@
 import { get } from 'lodash'
 export default {
    async fetch() {
-      await this.$store.dispatch('shops/getShops').then((d) => console.warn(d))
+      await this.$store.dispatch('shop/getShop').then((d) => console.warn(d))
    },
    data() {
       return {

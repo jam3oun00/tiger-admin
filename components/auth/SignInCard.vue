@@ -69,7 +69,7 @@ export default {
          this.$store
             .dispatch('authentication/signIn/signin', this.logInData)
             .then(() => {
-               this.$store.dispatch('shops/getShops')
+               this.$store.dispatch('shop/getShop')
             })
             .finally(() => {
                this.signinLoader = false

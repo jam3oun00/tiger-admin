@@ -17,7 +17,7 @@ import { get } from 'lodash'
 export default {
    computed: {
       ...mapState({
-         products: (state) => get(state, 'shops.shops.products', {}),
+         products: (state) => get(state, 'shop.shop.products', {}),
       }),
    },
 }

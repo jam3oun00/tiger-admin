@@ -184,7 +184,24 @@
                   <chevron-down-icon size="21" />
                </template>
             </v-select>
+            <v-btn
+               icon
+               @click="
+                  show = !show
+                  $router.push(`/?key=${menu.key}`)
+               "
+            >
+               <v-icon>
+                  {{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
+               </v-icon>
+            </v-btn>
          </div>
+         <v-expand-transition>
+            <div v-show="show">
+               {{$route.query.key}}
+               <base-product class="mt-6" />
+            </div>
+         </v-expand-transition>
       </v-card-text>
    </v-card>
 </template>
@@ -201,6 +218,7 @@ export default {
    data() {
       return {
          get,
+         show: false,
          isEmpty,
          modalStart: false,
          modalEnd: false,
@@ -235,9 +253,9 @@ export default {
    methods: {
       doMenu(key) {
          this.$store
-            .dispatch('shops/updateShop', {
+            .dispatch('shop/updateShop', {
                key,
-               contact: this.$store.state.shops.shops.contact,
+               contact: this.$store.state.shop.shop.contact,
                ...this.form,
             })
             .finally(() => {
