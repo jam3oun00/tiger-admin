@@ -9,7 +9,7 @@ export const actions = {
                console.warn(data)
                this.$router.push('/')
                if (data.shop) {
-                  localStorage.setItem('shop_data', JSON.stringify(data.shop))
+                  localStorage.setItem('shop', JSON.stringify(data.shop))
                }
                context.commit(
                   'structure/alert/alertMe',

@@ -1,8 +1,9 @@
+// TODO: use "vuex-persistedstate" to store state 
 export const state = () => ({
    shop: {},
 })
 export const mutations = {
-   setMenus(state, payload) {
+   setShop(state, payload) {
       state.shop = payload || {}
       console.warn('._.', payload)
    },
@@ -20,16 +21,16 @@ export const actions = {
    getShop({ commit }) {
       return new Promise((resolve, reject) => {
          try {
-            const shop = JSON.parse(localStorage.getItem('shop_data')) || {}
-            commit('setMenus', shop)
+            const shop = JSON.parse(localStorage.getItem('shop')) || {}
+            commit('setShop', shop)
             resolve(shop)
          } catch (e) {
-            commit('setMenus', {})
+            commit('setShop', {})
             reject(e)
          }
       })
    },
-   updateShop({ commit }, data) {
+   doMenu({ commit }, data) {
       let newData = data
       //
       newData.start ? (newData.start = newData.start.replace(':', '')) : null
@@ -42,9 +43,9 @@ export const actions = {
             .then(({ data }) => {
                if (data !== null) {
                   console.log(data ? data : false)
-                  localStorage.setItem('shop_data', JSON.stringify({ ...data }))
-                  console.log(JSON.parse(localStorage.getItem('shop_data')))
-                  commit('setMenus', { ...data })
+                  localStorage.setItem('shop', JSON.stringify({ ...data }))
+                  console.log(JSON.parse(localStorage.getItem('shop')))
+                  commit('setShop', { ...data })
 
                   commit(
                      'structure/alert/alertMe',

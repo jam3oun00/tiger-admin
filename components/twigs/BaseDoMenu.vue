@@ -253,7 +253,7 @@ export default {
    methods: {
       doMenu(key) {
          this.$store
-            .dispatch('shop/updateShop', {
+            .dispatch('shop/doMenu', {
                key,
                contact: this.$store.state.shop.shop.contact,
                ...this.form,
