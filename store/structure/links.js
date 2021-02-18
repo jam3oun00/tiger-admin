@@ -6,11 +6,6 @@ export const state = () => ({
          title: 'Menu',
          to: '/',
       },
-      {
-         icon: 'mdi-home',
-         title: 'Products',
-         to: '/products',
-      },
    ],
 })
 
