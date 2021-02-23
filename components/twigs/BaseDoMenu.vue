@@ -186,15 +186,13 @@
             </v-select>
             <v-btn
                icon
-               @click="
-                  show = !show
-                  $router.push(`/?key=${menu.key}`)
-               "
+               @click="showProducts(menu.key)"
             >
                <v-icon>
                   {{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
                </v-icon>
             </v-btn>
+            <div v-if="show"> <BaseProduct :menuKey="menu.key" /></div>
          </div>
          <v-expand-transition>
             <div v-show="show">
@@ -208,7 +206,11 @@
 
 <script>
 import { get, isEmpty } from 'lodash'
+import BaseProduct from './BaseProduct'
 export default {
+   components: {
+      BaseProduct
+   },
    props: {
       menu: {
          type: [Object],
@@ -251,6 +253,10 @@ export default {
       }
    },
    methods: {
+      showProducts(key) {
+         this.show = !this.show
+
+      },
       doMenu(key) {
          this.$store
             .dispatch('shop/doMenu', {

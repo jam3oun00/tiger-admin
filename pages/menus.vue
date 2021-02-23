@@ -49,7 +49,6 @@
                            $refs.modalStart.save(data.hours.start)
                         "
                      >
-                        OK
                      </v-btn>
                   </v-time-picker>
                </v-dialog>
