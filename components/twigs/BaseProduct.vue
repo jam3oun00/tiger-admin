@@ -38,7 +38,7 @@ export default {
    },
    computed: {
       products() {
-         return this.$store.getters['shop/getProduct'](this.$route.query.key)
+         return this.$store.getters['shop/getProducts'](this.$route.query.key)
       },
    },
 }
