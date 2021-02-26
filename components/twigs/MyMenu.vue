@@ -18,7 +18,7 @@
             itemName="status"
             :itemValue="menu.status"
             :isSwitch="true"
-            :switchOptions="['active', 'inactive']"
+            :switchOptions="['active', 'inactive']" 
          />
 
          <v-btn icon @click="show = !show">
