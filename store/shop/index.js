@@ -2,76 +2,76 @@ import _ from 'lodash'
 
 // TODO: use "vuex-persistedstate" to store state
 
-function genMenuProducts (products) {
-  // const menuKeys = ['Dinner', 'Breakfast', 'Lunch']
-  // console.log('doign genMenuProducts', menuKeys, products)
-  var obj = {}
-  var myItems = []
-  var menuKeys = []
-  for (const product of products) {
-    menuKeys.push(product.menuKey)
-  }
-  menuKeys = [...new Set(menuKeys)]
-  for (const key of menuKeys) {
-    for (const product of products) {
-      if (product.menuKey === key) {
-        myItems.push(product)
+function genMenuProducts(products) {
+   // const menuKeys = ['Dinner', 'Breakfast', 'Lunch']
+   // console.log('doign genMenuProducts', menuKeys, products)
+   const obj = {}
+   let myItems = []
+   let menuKeys = []
+   for (const product of products) {
+      menuKeys.push(product.menuKey)
+   }
+   menuKeys = [...new Set(menuKeys)]
+   for (const key of menuKeys) {
+      for (const product of products) {
+         if (product.menuKey === key) {
+            myItems.push(product)
+         }
       }
-    }
-    if (myItems.length > 0) {
-      obj[key] = myItems
-    }
-    myItems = []
-  }
-  return obj
+      if (myItems.length > 0) {
+         obj[key] = myItems
+      }
+      myItems = []
+   }
+   return obj
 }
 
-function genProductComponents (components) {
-  // const menuKeys = ['Dinner', 'Breakfast', 'Lunch']
-  // console.log('doign genMenuProducts', menuKeys, products)
-  var obj = {}
-  var myItems = []
-  var productKeys = []
-  for (const component of components) {
-    productKeys.push(component.productKey)
-  }
-  productKeys = [...new Set(productKeys)]
-  for (const key of productKeys) {
-    for (const component of components) {
-      if (component.productKey === key) {
-        myItems.push(component)
+function genProductComponents(components) {
+   // const menuKeys = ['Dinner', 'Breakfast', 'Lunch']
+   // console.log('doign genMenuProducts', menuKeys, products)
+   const obj = {}
+   let myItems = []
+   let productKeys = []
+   for (const component of components) {
+      productKeys.push(component.productKey)
+   }
+   productKeys = [...new Set(productKeys)]
+   for (const key of productKeys) {
+      for (const component of components) {
+         if (component.productKey === key) {
+            myItems.push(component)
+         }
       }
-    }
-    if (myItems.length > 0) {
-      obj[key] = myItems
-    }
-    myItems = []
-  }
-  return obj
+      if (myItems.length > 0) {
+         obj[key] = myItems
+      }
+      myItems = []
+   }
+   return obj
 }
 
-function genComponentElements (elements) {
-  // const menuKeys = ['Dinner', 'Breakfast', 'Lunch']
-  // console.log('doign genMenuProducts', menuKeys, products)
-  var obj = {}
-  var myItems = []
-  var componentKeys = []
-  for (const element of elements) {
-    componentKeys.push(element.componentKey)
-  }
-  componentKeys = [...new Set(componentKeys)]
-  for (const key of componentKeys) {
-    for (const element of elements) {
-      if (element.componentKey === key) {
-        myItems.push(element)
+function genComponentElements(elements) {
+   // const menuKeys = ['Dinner', 'Breakfast', 'Lunch']
+   // console.log('doign genMenuProducts', menuKeys, products)
+   const obj = {}
+   let myItems = []
+   let componentKeys = []
+   for (const element of elements) {
+      componentKeys.push(element.componentKey)
+   }
+   componentKeys = [...new Set(componentKeys)]
+   for (const key of componentKeys) {
+      for (const element of elements) {
+         if (element.componentKey === key) {
+            myItems.push(element)
+         }
       }
-    }
-    if (myItems.length > 0) {
-      obj[key] = myItems
-    }
-    myItems = []
-  }
-  return obj
+      if (myItems.length > 0) {
+         obj[key] = myItems
+      }
+      myItems = []
+   }
+   return obj
 }
 
 export const state = () => ({
@@ -93,7 +93,7 @@ export const mutations = {
    },
    setCurrentProduct(state, product) {
       state.currentProduct = product
-   }
+   },
 }
 export const getters = {
    getProducts: (state) => (key) => {
@@ -105,6 +105,22 @@ export const getters = {
    },
 }
 export const actions = {
+   async register({ commit }, { name, contact, password }) {
+      try {
+         console.log('doing register from store')
+         const { data } = await this.$axios.post('/register', {
+            name,
+            contact,
+            password,
+         })
+         return data
+      } catch (error) {
+         if (error.response && error.response.status === 401) {
+            throw new Error('Bad credentials')
+         }
+         throw error
+      }
+   },
    getShop({ commit }) {
       return new Promise((resolve, reject) => {
          try {
@@ -119,16 +135,15 @@ export const actions = {
    },
    update({ state, commit }, update) {
       const todo = update.todo
-      let newData = update.data
+      const newData = update.data
       const contact = state.shop.contact
-      newData['contact'] = contact
+      newData.contact = contact
       return new Promise((resolve, reject) => {
          this.$axios
             .post(`/${todo}`, newData)
             .then(({ data }) => {
                console.log('shop res after post', data)
                if (data !== null) {
-                  console.log(data || false)
                   localStorage.setItem('shop', JSON.stringify({ ...data }))
                   commit('setShop', { ...data })
                   commit(

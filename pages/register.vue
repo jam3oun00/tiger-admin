@@ -1,11 +1,19 @@
 <template>
    <v-card flat class="px-12 pb-15 pt-5 mx-auto wall" width="450">
-      <v-form v-model="isFormValid" @submit.prevent="userLogin">
+      <v-form v-model="isFormValid" @submit.prevent="register">
          <v-card-title class="text-capitalize d-flex justify-center">
-            sign in
+            Register
          </v-card-title>
          <v-text-field
-            v-model="logInData.contact"
+            v-model="registration.name"
+            label="Shop Name"
+            :counter="100"
+            required
+            filled
+            dense
+         />
+         <v-text-field
+            v-model="registration.contact"
             label="Email or Phone"
             :counter="100"
             required
@@ -13,7 +21,7 @@
             dense
          />
          <v-text-field
-            v-model="logInData.password"
+            v-model="registration.password"
             type="password"
             :counter="25"
             filled
@@ -27,10 +35,10 @@
             class="mt-5"
             type="submit"
             color="primary"
-            :loading="signInLoader"
-            :disabled="!isFormValid || signInLoader"
+            :loading="registrationLoader"
+            :disabled="!isFormValid || registrationLoader"
          >
-            sign in
+            Register
          </v-btn>
       </v-form>
    </v-card>
@@ -38,10 +46,12 @@
 
 <script>
 export default {
+   auth: false,
    data() {
       return {
-         signInLoader: false,
-         logInData: {
+         registrationLoader: false,
+         registration: {
+            name: '',
             contact: '',
             password: '',
          },
@@ -62,15 +72,16 @@ export default {
       }
    },
    methods: {
-      userLogin() {
-         this.signInLoader = true
-         this.$store
-            .dispatch('authentication/signIn/signIn', this.logInData)
-            .then(() => {
-               this.$store.dispatch('shop/getShop')
+      register() {
+         this.registrationLoader = true
+         this.$store.dispatch('shop/register', this.registration)
+            .then((data) => {
+               if (data) {
+                  this.$store.dispatch('authentication/signIn/signIn', this.registration)
+               }
             })
             .finally(() => {
-               this.signInLoader = false
+               this.registrationLoader = false
             })
       },
    },

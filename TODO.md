@@ -10,5 +10,10 @@ Direct to profile page (doBanking, doInfo) after registration
 
 # Style product.vue
 
-# optimisation: do not return shop data after update
+# Optimisation: streamline login 
+
+# Optimisation: do not return shop data after update
 change vuex state management accordingly
+
+# BUG: leftover shop data from previous user
+after new user registeration, the shop data from previous user is shown

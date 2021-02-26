@@ -1,5 +1,5 @@
 export const actions = {
-   signin(context, data) {
+   signIn(context, data) {
       return new Promise((resolve, reject) => {
          this.$auth
             .loginWith('local', {
