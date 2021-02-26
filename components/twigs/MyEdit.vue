@@ -4,7 +4,7 @@
          <v-switch
             v-model="switched"
             inset
-            :label="`Status: ${edit}`"
+            :label="`${itemName}: ${edit}`"
             @click="doEdit"
          ></v-switch>
       </div>
@@ -97,12 +97,11 @@ export default {
       doEdit() {
          if (this.isSwitch) {
             if (this.edit === this.switchOptions[0]) {
-               this.edit = this.switchOptions[1]
+               this.edit = this.switchOptions[1].toString()
             } else {
-               this.edit = this.switchOptions[0]
+               this.edit = this.switchOptions[0].toString()
             }
          }
-         console.log('do edit..', this.edit)
          const data = {}
          data['key'] = this.doKey
          data[this.itemName] = this.edit

@@ -14,7 +14,7 @@
                :itemValue="product.name"
             />
             <!-- TODO: on click go to product page to edit details -->
-            <v-btn class="mx-2" fab dark x-small color="primary">
+            <v-btn class="mx-2" fab dark x-small color="primary" @click="setProduct(product)">
                <v-icon dark> mdi-pencil </v-icon>
             </v-btn>
          </div>
@@ -59,6 +59,12 @@ export default {
          return this.$store.state.shop.products[this.menuKey]
       },
    },
+   methods: {
+      setProduct(product) {
+         this.$store.commit('shop/setCurrentProduct', product)
+         this.$router.push('/product')
+      }
+   }
 }
 </script>
 

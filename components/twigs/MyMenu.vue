@@ -21,7 +21,7 @@
             :switchOptions="['active', 'inactive']"
          />
 
-         <v-btn icon @click="showProducts()">
+         <v-btn icon @click="show = !show">
             <v-icon>
                {{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
             </v-icon>
@@ -84,22 +84,22 @@ export default {
       showProducts() {
          this.show = !this.show
       },
-      doMenu(key) {
-         this.$store
-            .dispatch('shop/doMenu', {
-               key,
-               contact: this.$store.state.shop.shop.contact,
-               ...this.form,
-            })
-            .finally(() => {
-               for (let key in this.isInEditMode) {
-                  this.isInEditMode[key] = false
-               }
-               for (let key in this.loaders) {
-                  this.loaders[key] = false
-               }
-            })
-      },
+      // doMenu(key) {
+      //    this.$store
+      //       .dispatch('shop/doMenu', {
+      //          key,
+      //          contact: this.$store.state.shop.shop.contact,
+      //          ...this.form,
+      //       })
+      //       .finally(() => {
+      //          for (let key in this.isInEditMode) {
+      //             this.isInEditMode[key] = false
+      //          }
+      //          for (let key in this.loaders) {
+      //             this.loaders[key] = false
+      //          }
+      //       })
+      // },
       updateTimeModal(key, time) {
          time === 'end'
             ? this.$refs.modalEnd.save(this.form.end)

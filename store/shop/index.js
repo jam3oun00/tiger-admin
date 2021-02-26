@@ -76,6 +76,7 @@ function genComponentElements (elements) {
 
 export const state = () => ({
    shop: {},
+   currentProduct: {},
    menus: [],
    products: {}, // menuKey as key
    components: {}, // productKey as key, e.g. {product@MenuA: [component1, component2...], product2@MenuA: [component1, ...]}
@@ -90,6 +91,9 @@ export const mutations = {
       state.components = genProductComponents(payload.components)
       state.elements = genComponentElements(payload.elements)
    },
+   setCurrentProduct(state, product) {
+      state.currentProduct = product
+   }
 }
 export const getters = {
    getProducts: (state) => (key) => {
