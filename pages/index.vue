@@ -1,8 +1,16 @@
 <template>
-<!-- TODO: 
-If not signed in, show SignInCard
-If signed in, go to menus page -->
-
   <NuxtLink to="/menus">Home page</NuxtLink>
-  
 </template>
+
+<script>
+export default {
+  created() {
+      if (this.$store.state.shop.shop) {
+        this.$router.push('/menus')
+      } else {
+        this.$router.push('/auth/sign-in')
+      }
+      
+   },
+}
+</script>
