@@ -1,5 +1,5 @@
 <template>
-   <v-card class="shadow-2">
+   <v-card class="shadow-1">
       <!--  -->
       <!-- title (name) -->
       <!--  -->
@@ -184,20 +184,21 @@
                   <chevron-down-icon size="21" />
                </template>
             </v-select>
-            <v-btn
-               icon
-               @click="showProducts(menu.key)"
-            >
+            <v-btn icon @click="showProducts(menu.key)">
                <v-icon>
                   {{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
                </v-icon>
             </v-btn>
-            <div v-if="show"> <BaseProduct :menuKey="menu.key" /></div>
          </div>
          <v-expand-transition>
             <div v-show="show">
-               {{$route.query.key}}
-               <base-product class="mt-6" />
+               {{ $route.query.key }}
+               <base-product
+                  v-for="(product, i, k) in products"
+                  :key="k"
+                  :product="product"
+                  class="mt-6"
+               />
             </div>
          </v-expand-transition>
       </v-card-text>
@@ -206,11 +207,7 @@
 
 <script>
 import { get, isEmpty } from 'lodash'
-import BaseProduct from './BaseProduct'
 export default {
-   components: {
-      BaseProduct
-   },
    props: {
       menu: {
          type: [Object],
@@ -252,10 +249,15 @@ export default {
          },
       }
    },
+   computed: {
+      products() {
+         // return this.$store.getters['shop/getProducts'](this.$route.query.key)
+         return this.$store.state.shop.products['早餐']
+      },
+   },
    methods: {
       showProducts(key) {
          this.show = !this.show
-
       },
       doMenu(key) {
          this.$store
