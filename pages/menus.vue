@@ -1,5 +1,13 @@
 <template>
    <base-container>
+      <masonry :cols="{ 600: 1, 960: 1, 1264: 2, 1904: 3 }" :gutter="20">
+         <my-menu
+            v-for="(menu, i, k) in menus"
+            :key="k"
+            :menu="menu"
+            class="mb-5"
+         />
+      </masonry>
       <v-btn fixed bottom right fab color="primary" @click="modal = !modal">
          <plus-icon />
       </v-btn>
@@ -13,100 +21,22 @@
                clearable
             />
             <v-textarea
+               v-model="data.description"
                filled
                placeholder="Enter menu description"
-               v-model="data.description"
                auto-grow
             />
-            <template>
-               <!--  -->
-               <!--  -->
-               <!--  -->
-               <v-dialog
-                  v-model="modalStart"
-                  ref="modalStart"
-                  :return-value.sync="data.hours.start"
-                  persistent
-                  width="290px"
-               >
-                  <template v-slot:activator="{ on, attrs }">
-                     <v-chip v-bind="attrs" v-on="on">
-                        {{ data.hours.start || 'Not set' }}
-                     </v-chip>
-                  </template>
-                  <v-time-picker
-                     format="ampm"
-                     v-if="modalStart"
-                     v-model="data.hours.start"
-                     full-width
-                  >
-                     <v-spacer />
-                     <v-btn
-                        text
-                        color="primary"
-                        @click="
-                           modalEnd = false
-                           $refs.modalStart.save(data.hours.start)
-                        "
-                     >
-                     </v-btn>
-                  </v-time-picker>
-               </v-dialog>
-
-               <v-dialog
-                  ref="modalEnd"
-                  v-model="modalEnd"
-                  :return-value.sync="data.hours.end"
-                  persistent
-                  width="290px"
-               >
-                  <template v-slot:activator="{ on, attrs }">
-                     <v-chip v-bind="attrs" v-on="on">
-                        {{ data.hours.end || 'Not set' }}
-                     </v-chip>
-                  </template>
-                  <v-time-picker
-                     format="ampm"
-                     v-if="modalEnd"
-                     v-model="data.hours.end"
-                     full-width
-                  >
-                     <v-spacer />
-                     <v-btn
-                        text
-                        color="primary"
-                        @click="
-                           modalEnd = false
-                           $refs.modalEnd.save(data.hours.end)
-                        "
-                     >
-                        OK
-                     </v-btn>
-                  </v-time-picker>
-               </v-dialog>
-               <!--  -->
-               <!--  -->
-               <!--  -->
-            </template>
          </v-card-text>
          <div class="d-flex">
             <v-spacer />
             <v-btn
                :loading="loading"
-               @click="doMenu('')"
                class="primary mx-3 mb-3"
+               @click="doMenu('')"
                >create</v-btn
             >
          </div>
       </modal>
-      <masonry :cols="{ 600: 1, 960: 1, 1264: 2, 1904: 3 }" :gutter="20">
-         <base-do-menu
-            v-for="(menu, i, k) in menus"
-            :key="k"
-            :menu="menu"
-            class="mb-5"
-         />
-      </masonry>
       <!-- <v-row>
              <v-col cols="12" md="4" lg="3" v-for="(menu, i, k) in menus" :key="k">
              </v-col>
@@ -145,7 +75,7 @@ export default {
          this.loading = true
          this.$store
             .dispatch('shop/doMenu', {
-               key: key,
+               key,
                contact: this.$store.state.shop.shop.contact,
                ...this.data,
             })

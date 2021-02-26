@@ -113,6 +113,56 @@ export const actions = {
          }
       })
    },
+   update({ state, commit }, update) {
+      const todo = update.todo
+      let newData = update.data
+      const contact = state.shop.contact
+      newData['contact'] = contact
+      return new Promise((resolve, reject) => {
+         this.$axios
+            .post(`/${todo}`, newData)
+            .then(({ data }) => {
+               console.log('shop res after post', data)
+               if (data !== null) {
+                  console.log(data || false)
+                  localStorage.setItem('shop', JSON.stringify({ ...data }))
+                  commit('setShop', { ...data })
+                  commit(
+                     'structure/alert/alertMe',
+                     {
+                        msg: `You done ${todo} for ${
+                           newData.key ? 'updated' : 'created'
+                        } successfully`,
+                        type: 'success',
+                     },
+                     { root: true }
+                  )
+                  resolve({ data })
+               } else {
+                  commit(
+                     'structure/alert/alertMe',
+                     {
+                        msg: 'error while updating shop data. please try again',
+                        type: 'error',
+                     },
+                     { root: true }
+                  )
+                  reject('error while updating shop data. please try again')
+               }
+            })
+            .catch((err) => {
+               commit(
+                  'structure/alert/alertMe',
+                  {
+                     msg: 'error while updating shop data. please try again',
+                     type: 'error',
+                  },
+                  { root: true }
+               )
+               reject(err)
+            })
+      })
+   },
    doMenu({ commit }, data) {
       const newData = data
       //
