@@ -12,27 +12,26 @@
          />
       </v-card-title>
 
-         <my-edit
-            do="doMenu"
-            :doKey="menu.key"
-            itemName="status"
-            :itemValue="menu.status"
-            :isSwitch="true"
-            :switchOptions="['active', 'inactive']"
-         />
+      <my-edit
+         do="doMenu"
+         :doKey="menu.key"
+         itemName="status"
+         :itemValue="menu.status"
+         :isSwitch="true"
+         :switchOptions="['active', 'inactive']"
+      />
 
-         <v-btn icon @click="show = !show">
-            <v-icon>
-               {{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
-            </v-icon>
-         </v-btn>
+      <v-btn icon @click="show = !show">
+         <v-icon>
+            {{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
+         </v-icon>
+      </v-btn>
 
-         <v-expand-transition>
-            <div v-show="show">
-               <my-products :menuKey="menu.key" class="mt-6" />
-            </div>
-         </v-expand-transition>
-      
+      <v-expand-transition>
+         <div v-show="show">
+            <my-products :menuKey="menu.key" class="mt-6" />
+         </div>
+      </v-expand-transition>
    </v-card>
 </template>
 

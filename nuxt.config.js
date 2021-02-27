@@ -71,13 +71,20 @@ export default {
       '@nuxtjs/auth-next',
       // https://www.npmjs.com/package/nuxt-moment
       'nuxt-moment',
+      // for CORS issue
+      '@nuxtjs/proxy',
    ],
 
    // Axios module configuration: https://go.nuxtjs.dev/config-axios
    axios: {
       baseURL: 'http://125.59.218.85:8500/shop',
+      // proxy: true
    },
 
+   // proxy: {
+   //    '/uploadImage': 'https://api.imgbb.com/', 
+   // },
+   
    // PWA module configuration: https://go.nuxtjs.dev/pwa
    pwa: {
       manifest: {
