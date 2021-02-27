@@ -1,16 +1,15 @@
 <template>
-  <NuxtLink to="/menus">Home page</NuxtLink>
+   <NuxtLink to="/menus">Home page</NuxtLink>
 </template>
 
 <script>
 export default {
-  created() {
+   mounted() {
       if (this.$store.state.shop.shop) {
-        this.$router.push('/menus')
+         this.$router.push('/menus')
       } else {
-        this.$router.push('/auth/sign-in')
+         this.$router.push('/auth/sign-in')
       }
-      
    },
 }
 </script>

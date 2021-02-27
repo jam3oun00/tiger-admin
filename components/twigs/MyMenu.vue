@@ -3,36 +3,61 @@
       <!--  -->
       <!-- title (name) -->
       <!--  -->
-      <v-card-title class="d-flex flex-nowrap">
+      <!-- <v-card-title class="d-flex flex-nowrap">
          <my-edit
             do="doMenu"
             :doKey="menu.key"
             itemName="name"
             :itemValue="menu.name"
          />
-      </v-card-title>
-
+      </v-card-title> -->
+      <v-img
+         :aspect-ratio="16 / 10"
+         :src="menu.image"
+         class="white--text align-end"
+         gradient="to bottom, rgba(0,0,0,.07), rgba(0,0,0,.55)"
+      >
+         <my-edit
+            do="doMenu"
+            className="v-card__title d-flex flex-nowrap"
+            :doKey="menu.key"
+            itemName="name"
+            :itemValue="menu.name"
+         />
+      </v-img>
+      <v-card-text>
          <my-edit
             do="doMenu"
             :doKey="menu.key"
-            itemName="status"
-            :itemValue="menu.status"
-            :isSwitch="true"
-            :switchOptions="['active', 'inactive']" 
+            itemName="description"
+            :itemValue="menu.description"
+            textarea
          />
 
-         <v-btn icon @click="show = !show">
-            <v-icon>
-               {{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
-            </v-icon>
-         </v-btn>
+         <div class="d-flex align-center mt-4">
+            <v-btn @click="show = !show" rounded>
+               Products
+               <v-icon right>
+                  {{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
+               </v-icon>
+            </v-btn>
+            <v-spacer />
+            <my-edit
+               do="doMenu"
+               :doKey="menu.key"
+               itemName="status"
+               :itemValue="menu.status"
+               isSwitch
+               :switchOptions="['active', 'inactive']"
+            />
+         </div>
+      </v-card-text>
 
-         <v-expand-transition>
-            <div v-show="show">
-               <my-products :menuKey="menu.key" class="mt-6" />
-            </div>
-         </v-expand-transition>
-      
+      <v-expand-transition>
+         <div v-show="show">
+            <my-products :menuKey="menu.key" class="mt-6" />
+         </div>
+      </v-expand-transition>
    </v-card>
 </template>
 

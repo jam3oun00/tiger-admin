@@ -1,44 +1,59 @@
 <template>
-   <div :key="editing">
+   <div :key="editing" v-click-outside="undoEdit">
       <div v-if="isSwitch">
          <v-switch
             v-model="switched"
             inset
-            :label="`${itemName}: ${edit}`"
+            class="mt-2 mb-1"
+            hide-details
+            :label="noSwitchLabel ? false : `${itemName}: ${edit}`"
             @click="doEdit"
-         ></v-switch>
+         />
       </div>
       <div v-else>
-         <v-text-field
-            v-if="editing"
-            v-model="edit"
-            name="name"
-            :placeholder="'Input ' + itemName"
-            filled
-            rounded
-            dense
-            autofocus
-            hide-details
-            class="fill-width"
-         />
-         <span v-else @click="editing = true">
+         <div v-if="editing">
+            <v-textarea
+               v-if="textarea"
+               filled
+               :placeholder="`Input ${itemName} description`"
+               v-model="edit"
+               auto-grow
+               class="fill-width"
+               hide-details
+            >
+               <template #append>
+                  <base-append-input
+                     @confirm="doEdit()"
+                     @cancel="undoEdit()"
+                     :value="edit"
+                  />
+               </template>
+            </v-textarea>
+            <v-text-field
+               v-else
+               v-model="edit"
+               :type="type"
+               name="name"
+               :placeholder="`Input ${itemName}`"
+               filled
+               rounded
+               dense
+               autofocus
+               hide-details
+               class="fill-width"
+            >
+               <template #append>
+                  <base-append-input
+                     @confirm="doEdit()"
+                     @cancel="undoEdit()"
+                     :value="edit"
+                  />
+               </template>
+            </v-text-field>
+         </div>
+         <span v-else @click="editing = true" :class="className">
             {{ edit }}
          </span>
-
-         <div class="ml-2 d-flex" v-if="editing">
-            <v-btn
-               icon
-               class="mt-1"
-               color="success"
-               @click="doEdit()"
-               :disabled="!edit"
-            >
-               <check-icon />
-            </v-btn>
-            <v-btn icon class="mt-1" color="error" @click="undoEdit()">
-               <x-icon />
-            </v-btn>
-         </div>
       </div>
    </div>
 </template>
@@ -46,31 +61,21 @@
 <script>
 export default {
    props: {
-      do: {
-         type: String,
-         default: '',
-      },
-      doKey: {
-         type: String,
-         default: '',
-      },
-      itemName: {
-         type: String,
-         default: '',
-      },
-      itemValue: {
-         type: String,
-         default: '',
-      },
-      isSwitch: {
-         type: Boolean,
-         default: false,
-      },
+      className: String,
+      do: String,
+      doKey: String,
+      itemName: String,
+      itemValue: String,
+      textarea: Boolean,
+      isSwitch: Boolean,
+      noSwitchLabel: Boolean,
       switchOptions: {
          type: Array,
-         default: function () {
-            return ['on', 'off']
-         },
+         default: () => ['on', 'off'],
+      },
+      type: {
+         type: String,
+         default: 'text',
       },
    },
    data() {
@@ -78,6 +83,11 @@ export default {
          editing: false,
          edit: '',
          switched: false,
+      }
+   },
+   watch: {
+      switched(v) {
+         this.$emit('switch', v)
       }
    },
    mounted() {
@@ -91,6 +101,7 @@ export default {
    },
    methods: {
       undoEdit() {
+         console.log('./.')
          this.edit = this.itemValue
          this.editing = false
       },

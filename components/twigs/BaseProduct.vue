@@ -16,7 +16,7 @@
                dense
                autofocus
                hide-details
-               class="fill-width"
+               class="fill-width white--text"
                v-click-outside="hideTitle"
                v-if="isInEditMode.name"
             />

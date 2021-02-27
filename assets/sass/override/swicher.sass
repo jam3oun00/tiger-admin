@@ -1,30 +1,44 @@
-// Group size
-.v-input--switch .v-input--selection-controls__input
-  width: 45px !important
+// // Group size
+// .v-input--switch .v-input--selection-controls__input
+//   width: 45px !important
 
-  // Character distance
-  margin-right: 10px !important
+//   // Character distance
+//   margin-right: 10px !important
 
-// Pill bottom box
-.v-input--switch__track
-  width: 45px !important
-  height: 26px !important
-  top: calc(50% - 13px) !important
-  left: 0 !important
-  right: 0 !important
-  border-radius: 13px !important
+// // Pill bottom box
+// .v-input--switch__track
+//   width: 45px !important
+//   height: 26px !important
+//   top: calc(50% - 13px) !important
+//   left: 0 !important
+//   right: 0 !important
+//   border-radius: 13px !important
 
-// Round button / off
-.v-input--switch__thumb
-  // D = 20px
-  box-shadow: none !important
-  transform: translateX(4px) !important
+// // Round button / off
+// .v-input--switch__thumb
+//   // D = 20px
+//   box-shadow: none !important
+//   transform: translateX(4px) !important
 
-// Horizontal displacement / on
-.v-input--switch.v-input--is-dirty .v-input--selection-controls__ripple,
-.v-input--switch.v-input--is-dirty .v-input--switch__thumb
-  transform: translateX(22px) !important
+// // Horizontal displacement / on
+// .v-input--switch.v-input--is-dirty .v-input--selection-controls__ripple,
+// .v-input--switch.v-input--is-dirty .v-input--switch__thumb
+//   transform: translateX(22px) !important
 
-// Click to give back
-.v-input--switch .v-input--selection-controls__ripple
-  left: -12px !important
+// // Click to give back
+// .v-input--switch .v-input--selection-controls__ripple
+//   left: -12px !important
+
+.v-input--selection-controls__ripple
+  opacity: 0
+.v-input--switch--inset .v-input--switch__track
+  width: 50px
+.v-input.v-input--selection-controls.v-input--switch
+  transform: scale(.8)
+  margin-left: -33px
+  margin-right: -33px
+
+.v-input--selection-controls__input
+  transform: scale(.85)
+  margin-left: -12px
+  margin-right: -12px

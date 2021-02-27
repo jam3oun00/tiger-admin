@@ -1,42 +1,77 @@
 <template>
    <div>
-      <v-card
-         flat
-         class="transparent"
-         v-for="(product, i, k) in products"
-         :key="k"
+      <modal
+         v-model="productModal"
+         color="back"
+         :fullscreen="$vuetify.breakpoint.smAndDown"
       >
-         <div style="display: flex">
+         <v-card-title> Edit Product </v-card-title>
+         <v-card-text>
+            <my-product-edit />
+         </v-card-text>
+         <v-card-actions>
+            <v-spacer />
+            <v-btn text @click="productModal = false">cancel</v-btn>
+            <v-btn text color="primary" @click="productModal = false">
+               done
+            </v-btn>
+         </v-card-actions>
+      </modal>
+      <div v-for="(product, i, k) in products" :key="k">
+         <v-divider class="mt-n1 mb-0" />
+         <div class="pa-4">
+            <v-card flat>
+               <v-img
+                  :aspect-ratio="16 / 10"
+                  :src="product.image"
+                  class="white--text align-end"
+                  gradient="to bottom, rgba(0,0,0,.07), rgba(0,0,0,.55)"
+               >
+                  <my-edit
+                     do="doProduct"
+                     className="v-card__title d-flex flex-nowrap"
+                     :doKey="product.key"
+                     itemName="name"
+                     :itemValue="product.name"
+                  />
+               </v-img>
+               <!-- TODO: on click open product modal to edit details -->
+               <v-btn
+                  class="primary"
+                  dark
+                  icon
+                  absolute
+                  top
+                  right
+                  @click="setProduct(product)"
+               >
+                  <pencil-icon size="20" />
+               </v-btn>
+            </v-card>
+            <v-card-subtitle class="primary--text pb-0">
+               Retail Price
+            </v-card-subtitle>
             <my-edit
+               class="px-4"
                do="doProduct"
                :doKey="product.key"
-               itemName="name"
-               :itemValue="product.name"
+               itemName="pricing.retailPrice"
+               :itemValue="product.pricing.retailPrice.toString()"
             />
-            <!-- TODO: on click go to product page to edit details -->
-            <v-btn class="mx-2" fab dark x-small color="primary" @click="setProduct(product)">
-               <v-icon dark> mdi-pencil </v-icon>
-            </v-btn>
+            <v-card-subtitle class="primary--text pb-0">
+               Status
+            </v-card-subtitle>
+            <my-edit
+               class="px-4"
+               do="doProduct"
+               :doKey="product.key"
+               itemName="status"
+               :itemValue="product.status"
+               :isSwitch="true"
+               :switchOptions="['active', 'inactive']"
+            />
          </div>
-
-         <my-edit
-            do="doProduct"
-            :doKey="product.key"
-            itemName="pricing.retailPrice"
-            :itemValue="product.pricing.retailPrice.toString()"
-         />
-
-         <my-edit
-            do="doProduct"
-            :doKey="product.key"
-            itemName="status"
-            :itemValue="product.status"
-            :isSwitch="true"
-            :switchOptions="['active', 'inactive']"
-         />
-
-         <v-divider />
-      </v-card>
+      </div>
    </div>
 </template>
 
@@ -51,6 +86,7 @@ export default {
    data() {
       return {
          show: false,
+         productModal: false,
       }
    },
    computed: {
@@ -62,9 +98,9 @@ export default {
    methods: {
       setProduct(product) {
          this.$store.commit('shop/setCurrentProduct', product)
-         this.$router.push('/product')
-      }
-   }
+         this.productModal = !this.productModal
+      },
+   },
 }
 </script>
 

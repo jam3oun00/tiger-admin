@@ -5,7 +5,7 @@ export default {
    ssr: false,
    server: {
       port: 2222, // default: 2222
-      host: '0.0.0.0', // default: localhost 
+      // host: '0.0.0.0', // default: localhost 
    },
    // https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-loading/
    loading: false,
@@ -170,8 +170,8 @@ export default {
       redirect: {
          login: '/auth/sign-in',
          logout: '/auth/sign-in',
-         callback: '/callback',
-         home: '/',
+         callback: '/',
+         home: '/menu',
       },
    },
 }
