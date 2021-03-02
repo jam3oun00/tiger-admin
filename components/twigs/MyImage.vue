@@ -122,10 +122,18 @@ export default {
          const update = { todo, data }
          // NOTE: API DO NOT YET SUPPORT UDPATE IMAGE FOR SHOP
          // FOR NOW ONLY SUPPORT IMAGE UDPATE FOR PRODUCTS-COMPONENTS-ELEMENT
-         this.$store.dispatch('shop/update', update)
-         console.log(update)
+         this.$store.dispatch('shop/update', update).finally(() => {
+            console.log('end doImage, close modal')
+            this.modal = false
+            this.loading = false
+         })
       },
       upload(image) {
+         console.log('start upload')
+         this.$store.commit('structure/alert/alertMe', {
+            msg: `Upload in progress...`,
+            type: 'info',
+         })
          try {
             var bodyFormData = new FormData()
             bodyFormData.append('key', this.apiKey)
@@ -137,16 +145,16 @@ export default {
             })
                .then((response) => {
                   //handle success
+                  this.$store.commit('structure/alert/alertMe', {
+                     msg: `Uploaded successfuly, proccessing...`,
+                     type: 'info',
+                  })
                   this.linkGot = response.data.data.display_url
                   this.doImage()
                })
                .catch(function (response) {
                   //handle error
                   console.log(response)
-               })
-               .finally(() => {
-                  this.modal = false
-                  this.loading = false
                })
          } catch (error) {
             console.log(error)
@@ -168,10 +176,12 @@ export default {
          }
       },
       submit() {
+         console.log('start submit')
          this.loading = true
          if (this.imageData) {
             const reader = new FileReader()
             const b64 = this.imageData.split(';base64,').slice(-1)[0]
+            console.log('trigger upload')
             this.upload(b64)
             reader.readAsDataURL(this.files[0])
             this.$emit('input', this.files[0])

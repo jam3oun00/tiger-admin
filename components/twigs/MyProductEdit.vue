@@ -56,20 +56,19 @@
                      Review
                   </v-card-subtitle> -->
                   <v-card outlined class="mb-2">
-                     <v-img
-                        :aspect-ratio="16 / 10"
-                        :src="product.image"
-                        class="white--text align-end"
-                        gradient="to bottom, rgba(0,0,0,.07), rgba(0,0,0,.55)"
+                     <my-image
+                        :src="element.image"
+                        :doKey="element.key"
+                        do="doElement"
                      >
                         <my-edit
                            do="doElement"
+                           className="v-card__title d-flex flex-nowrap"
                            :doKey="element.key"
                            itemName="name"
-                           :itemValue="element['name']"
-                           className="v-card__title d-flex flex-nowrap"
+                           :itemValue="element.name"
                         />
-                     </v-img>
+                     </my-image>
                      <v-card-text class="pa-3 px-4">
                         <v-card-subtitle class="primary--text pa-0">
                            Retail Price

@@ -11,12 +11,7 @@
             :itemValue="menu.name"
          />
       </v-card-title> -->
-      <v-img
-         :aspect-ratio="16 / 10"
-         :src="menu.image"
-         class="white--text align-end"
-         gradient="to bottom, rgba(0,0,0,.07), rgba(0,0,0,.55)"
-      >
+      <my-image :src="menu.image" :doKey="menu.key" do="doMenu">
          <my-edit
             do="doMenu"
             className="v-card__title d-flex flex-nowrap"
@@ -24,7 +19,7 @@
             itemName="name"
             :itemValue="menu.name"
          />
-      </v-img>
+      </my-image>
       <v-card-text>
          <my-edit
             do="doMenu"
