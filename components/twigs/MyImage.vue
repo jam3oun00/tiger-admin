@@ -120,13 +120,11 @@ export default {
          data[this.itemName] = this.linkGot
          const todo = this.do
          const update = { todo, data }
+         this.modal = false
+         this.loading = false
          // NOTE: API DO NOT YET SUPPORT UDPATE IMAGE FOR SHOP
          // FOR NOW ONLY SUPPORT IMAGE UDPATE FOR PRODUCTS-COMPONENTS-ELEMENT
-         this.$store.dispatch('shop/update', update).finally(() => {
-            console.log('end doImage, close modal')
-            this.modal = false
-            this.loading = false
-         })
+         this.$store.dispatch('shop/update', update)
       },
       upload(image) {
          console.log('start upload')
@@ -155,6 +153,8 @@ export default {
                .catch(function (response) {
                   //handle error
                   console.log(response)
+                  // this.modal = false
+                  this.loading = false
                })
          } catch (error) {
             console.log(error)
