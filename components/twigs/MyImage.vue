@@ -166,14 +166,19 @@ export default {
       onSelectFile() {
          this.input = this.$refs.fileInput
          this.files = this.input.files
+         console.log('♻')
+         this.$forceUpdate()
          if (this.files && this.files[0]) {
             console.log('____ it should open the modal ____')
             this.modal = true
+            this.$forceUpdate()
             const reader = new FileReader()
             reader.onload = (e) => {
                this.imageData = e.target.result
             }
             reader.readAsDataURL(this.files[0])
+         } else {
+            console.log('💤')
          }
       },
       submit() {
