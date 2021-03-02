@@ -88,7 +88,7 @@ export default {
    watch: {
       switched(v) {
          this.$emit('switch', v)
-      }
+      },
    },
    mounted() {
       this.edit = this.itemValue
@@ -101,9 +101,11 @@ export default {
    },
    methods: {
       undoEdit() {
-         console.log('./.')
-         this.edit = this.itemValue
-         this.editing = false
+         if (this.editing) {
+            console.log('/ undoEdit /')
+            this.edit = this.itemValue
+            this.editing = false
+         }
       },
       doEdit() {
          if (this.isSwitch) {

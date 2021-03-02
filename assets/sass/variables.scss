@@ -1,4 +1,14 @@
 // Ref: https://github.com/nuxt-community/vuetify-module#customvariables
 //
 // The variables you want to modify
-// $font-size-root: 20px;
+$body-font-family: 'Tajawal', sans-serif;
+//
+// our variables
+$ease: cubic-bezier(0.85, 0.04, 0.26, 1.04);
+$animation-speed: 1.2s;
+$dialog-border-radius: 0;
+$dialog-elevation: 4;
+$menu-content-elevation: 3;
+$navigation-drawer-mobile-temporary-elevation: 4;
+$btn-focus-opacity: 0;
+$list-padding: 6px 0;

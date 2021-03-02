@@ -21,12 +21,7 @@
          <v-divider class="mt-n1 mb-0" />
          <div class="pa-4">
             <v-card flat>
-               <v-img
-                  :aspect-ratio="16 / 10"
-                  :src="product.image"
-                  class="white--text align-end"
-                  gradient="to bottom, rgba(0,0,0,.07), rgba(0,0,0,.55)"
-               >
+               <my-image :src="product.image" :doKey="product.key">
                   <my-edit
                      do="doProduct"
                      className="v-card__title d-flex flex-nowrap"
@@ -34,7 +29,16 @@
                      itemName="name"
                      :itemValue="product.name"
                   />
-               </v-img>
+               </my-image>
+
+               <!-- <v-img
+                  :aspect-ratio="16 / 10"
+                  :src="product.image"
+                  class="white--text align-end"
+                  gradient="to bottom, rgba(0,0,0,.07), rgba(0,0,0,.55)"
+               >
+                  
+               </v-img> -->
                <!-- TODO: on click open product modal to edit details -->
                <v-btn
                   class="primary"

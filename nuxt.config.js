@@ -19,6 +19,13 @@ export default {
          { hid: 'description', name: 'description', content: '' },
       ],
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+      link: [
+         {
+            rel: 'stylesheet',
+            href:
+               'https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Tajawal:wght@300;400;500;700&display=swap',
+         },
+      ],
    },
 
    // Global CSS: https://go.nuxtjs.dev/config-css
@@ -71,13 +78,20 @@ export default {
       '@nuxtjs/auth-next',
       // https://www.npmjs.com/package/nuxt-moment
       'nuxt-moment',
+      // for CORS issue
+      '@nuxtjs/proxy',
    ],
 
    // Axios module configuration: https://go.nuxtjs.dev/config-axios
    axios: {
       baseURL: 'http://125.59.218.85:8500/shop',
+      // proxy: true
    },
 
+   // proxy: {
+   //    '/uploadImage': 'https://api.imgbb.com/', 
+   // },
+   
    // PWA module configuration: https://go.nuxtjs.dev/pwa
    pwa: {
       manifest: {
