@@ -3,31 +3,17 @@
       <!-- @click="chooseImage" -->
       <!--  -->
       <modal v-model="modal" color="back" width="500">
-         <v-card-title> {{ src ? 'Edit Image' : 'Add Image' }} </v-card-title>
+         <v-card-title> Update Image </v-card-title>
          <v-divider />
          <v-img
             v-if="imageData || linkGot || src"
             :src="imageData || linkGot || src"
-            class="white--text align-end placeholder"
+            class="placeholder"
          />
-         <v-btn v-else @click="chooseImage" class="placeholder">
-            Choose an Image
-         </v-btn>
-
          <v-divider />
          <v-card-actions>
-            <v-btn
-               text
-               color="primary"
-               rounded
-               class="px-4 text-capitalize"
-               @click="chooseImage"
-               v-if="imageData || linkGot || src"
-            >
-               select a new one
-            </v-btn>
             <v-spacer />
-            <v-btn text @click="modal = !modal">cancel</v-btn>
+            <v-btn text @click="cancel">cancel</v-btn>
             <v-btn
                text
                color="primary"
@@ -35,7 +21,7 @@
                :loading="loading"
                :disabled="loading || (!imageData && !linkGot)"
             >
-               {{ src ? 'update image' : 'done' }}
+               update
             </v-btn>
          </v-card-actions>
       </modal>
@@ -76,7 +62,7 @@
             left
             dark
             class="primary"
-            @click="modal = !modal"
+            @click="chooseImage"
             icon
          >
             <!-- @click="doImage" -->
@@ -120,6 +106,14 @@ export default {
       }
    },
    methods: {
+      cancel() {
+         this.imageData = null
+         this.linkGot = ''
+         this.input = ''
+         this.files = []
+         this.loading = false
+         this.modal = false
+      },
       doImage() {
          const data = {}
          data['key'] = this.doKey
@@ -129,9 +123,9 @@ export default {
          // NOTE: API DO NOT YET SUPPORT UDPATE IMAGE FOR SHOP
          // FOR NOW ONLY SUPPORT IMAGE UDPATE FOR PRODUCTS-COMPONENTS-ELEMENT
          this.$store.dispatch('shop/update', update)
+         console.log(update)
       },
       upload(image) {
-         console.log('hi')
          try {
             var bodyFormData = new FormData()
             bodyFormData.append('key', this.apiKey)
@@ -143,8 +137,8 @@ export default {
             })
                .then((response) => {
                   //handle success
-                  console.log(response.data.data.display_url)
                   this.linkGot = response.data.data.display_url
+                  this.doImage()
                })
                .catch(function (response) {
                   //handle error
@@ -152,7 +146,6 @@ export default {
                })
                .finally(() => {
                   this.modal = false
-                  this.$forceUpdate()
                   this.loading = false
                })
          } catch (error) {
@@ -169,11 +162,9 @@ export default {
             const reader = new FileReader()
             reader.onload = (e) => {
                this.imageData = e.target.result
-               // const b64 = this.imageData.split(';base64,').slice(-1)[0]
-               // this.upload(b64)
             }
             reader.readAsDataURL(this.files[0])
-            // this.$emit('input', this.files[0])
+            this.modal = true
          }
       },
       submit() {
