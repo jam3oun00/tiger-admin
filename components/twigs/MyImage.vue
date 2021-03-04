@@ -39,12 +39,19 @@
          <br />
          <span> {{ linkGot }} </span>
       </div> -->
-      <input
+      <!-- <input
          class="file-input"
          ref="fileInput"
          accept="image/jpeg, image/jpg, image/png"
          type="file"
          @change="onSelectFile"
+      /> -->
+      <v-file-input
+         class="file-input"
+         ref="fileInput"
+         accept="image/jpeg, image/jpg, image/png"
+         @change="onSelectFile"
+         v-model="files"
       />
       <v-card flat tile class="transparent">
          <v-img
@@ -108,9 +115,8 @@ export default {
    methods: {
       cancel() {
          this.imageData = null
-         this.linkGot = ''
-         this.input = ''
-         this.files = []
+         this.linkGot = null
+         this.files = null
          this.loading = false
          this.modal = false
       },
@@ -161,22 +167,22 @@ export default {
          }
       },
       chooseImage() {
-         this.$refs.fileInput.click()
+         this.$refs.fileInput.$refs.input.click()
       },
       onSelectFile() {
-         this.input = this.$refs.fileInput
-         this.files = this.input.files
-         console.log('♻')
-         this.$forceUpdate()
-         if (this.files && this.files[0]) {
-            console.log('____ it should open the modal ____')
+         // this.input = this.$refs.fileInput
+         // this.files = this.input.files
+         console.log('♻', this.files)
+         // this.$forceUpdate()
+         if (this.files) {
+            console.log('____ it should open the modal ____', this.files)
             this.modal = true
             this.$forceUpdate()
             const reader = new FileReader()
             reader.onload = (e) => {
                this.imageData = e.target.result
             }
-            reader.readAsDataURL(this.files[0])
+            reader.readAsDataURL(this.files)
          } else {
             console.log('💤')
          }
@@ -189,8 +195,8 @@ export default {
             const b64 = this.imageData.split(';base64,').slice(-1)[0]
             console.log('trigger upload')
             this.upload(b64)
-            reader.readAsDataURL(this.files[0])
-            this.$emit('input', this.files[0])
+            reader.readAsDataURL(this.files)
+            this.$emit('input', this.files)
          }
       },
    },
